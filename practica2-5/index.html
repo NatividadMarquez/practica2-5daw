@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Practica2 5 - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Practica2 5</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#practica-25-proxy-inverso-y-balanceo-de-carga-con-ssl-en-nginx" class="nav-link">Practica 2.5 - Proxy inverso y balanceo de carga con SSL en NGINX</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#1introduccion" class="nav-link">1.INTRODUCCIÓN</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#2tarea" class="nav-link">2.TAREA</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#3comprobaciones" class="nav-link">3.COMPROBACIONES</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>Natividad Márquez Baena</p>
+<h1 id="practica-25-proxy-inverso-y-balanceo-de-carga-con-ssl-en-nginx">Practica 2.5 - Proxy inverso y balanceo de carga con SSL en NGINX</h1>
+<p>1.INTRODUCCIÓN
+2.TAREA
+3.COMPROBACIONES</p>
+<h2 id="1introduccion">1.INTRODUCCIÓN</h2>
+<p>En la práctica anterior se configuraró un proxy inverso con balanceo de carga entre dos servidores web Nginx. En esta  se implementará la configuración de SSL para el cifrado HTTPS. El proxy inverso actúa como intermediario entre los clientes y los servidores, ofreciendo la ventaja de realizar el cifrado y descifrado de SSL, lo que reduce la carga en los servidores web. Se generará un certificado autofirmado mediante la herramienta OpenSSL, simulando el entorno seguro.</p>
+<h2 id="2tarea">2.TAREA</h2>
+<h3 id="21-crear-un-certificado-autofirmado">2.1 Crear un Certificado Autofirmado</h3>
+<p>Se crea un directorio para el certificado llamado ssl en la ruta <code>/etc/nginx/</code>.</p>
+<p><img alt="alt text" src="../image.png" /></p>
+<p>Se genera el certificado y la clave privada con OpenSSL mediante el siguiente comando (valido por un año):</p>
+<p><img alt="alt text" src="../image-1.png" /></p>
+<p>Descripción de los parámetros:
+<code>x509:</code> Crea un certificado autofirmado.
+<code>nodes:</code> No solicita contraseña, permitiendo el acceso directo del servidor.
+<code>days 365:</code> Validez del certificado en días.
+<code>newkey rsa:2048:</code> Genera una nueva clave RSA de 2048 bits.
+<code>keyout y -out</code> Define la ruta de salida para la clave y el certificado, respectivamente</p>
+<p>Se rellenará la información que solicita el certificado durante el proceso.</p>
+<h3 id="22-configuracion-ssl-en-el-proxy-inverso">2.2  Configuración SSL en el Proxy Inverso</h3>
+<p>Primero se edita el archivo de configuración del proxy en el directorio <code>/etc/nginx/sites-available</code>:</p>
+<p><img alt="alt text" src="../image-2.png" /></p>
+<p>Aquí se modifica el bloque server para habilitar el https. Se cambia la configuración para que el proxy escuche en el puerto 443 (HTTPS) y use el certificado y la clave creados.</p>
+<p><code>listen 443 ssl;</code>: Configura el servidor para escuchar en el puerto 443, activando SSL.</p>
+<p><code>ssl_certificate y ssl_certificate_key:</code> Ubicación del certificado y la clave privados generados.</p>
+<p><code>ssl_protocols y ssl_ciphers:</code> Establecen protocolos y algoritmos de cifrado seguros.</p>
+<p><code>access_log:</code> Especifica el nombre y ubicación del archivo de logs para HTTPS.</p>
+<p>Una vez hecho se realiza un test para comprobar que el archivo se ha modificado correctamente y la sintaxis es válida. Además se reinicia el servicio nginx para aplicar los cambios al archivo de configuración.</p>
+<p><img alt="alt text" src="../image-3.png" /></p>
+<h2 id="3comprobaciones">3.COMPROBACIONES</h2>
+<h3 id="31-acceder-al-sitio-mediante-https">3.1 Acceder al sitio mediante HTTPS</h3>
+<p>Se accede al sitio web y debería aparecer una advertencia de seguridad, ya que se trata de un certificado autofirmado.</p>
+<p><img alt="alt text" src="../image-4.png" /></p>
+<p>A continuación se revisa el certificado y los datos </p>
+<p><img alt="alt text" src="../image-5.png" />
+ <img alt="alt text" src="../image-6.png" /></p>
+<h3 id="32-forzar-la-redireccion-de-http-a-https">3.2  Forzar la Redirección de HTTP a HTTPS</h3>
+<p>Se añade un bloque server adicional para redirigir HTTP a HTTPS. Para ello se modifica el archivo anterior y se
+ añade el siguiente bloque:</p>
+<p><img alt="alt text" src="../image-7.png" /></p>
+<p>Como en anteriores pasos, se comprueban que los cambios son correctos y se reinicia el servicio nginx.
+Finalmente, al redirigirnos a la misma página, debería redirigirse automáticamente a la versión segura https.</p>
+<p><img alt="alt text" src="../image-8.png" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
